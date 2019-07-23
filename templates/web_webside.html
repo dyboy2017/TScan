@@ -70,11 +70,11 @@
 {% block page_js %}
         function get_webside_info(ip) {
             $.post('/api/getwebside',{
-                url: ip
+                ip: ip
             }, function(data){
                 if(data.code == 200){
                     $.each(data.data, function(index, obj){
-                        $('tbody').append('<tr><td> ' + obj['title'] + ' </td> <td><a href="https://blog.dyboy.cn/go/?url=' + obj['domain'] +'" target="_blank">' + obj['domain'] + '</a></td></tr>');
+                        $('tbody').append('<tr><td> ' + obj['title'] + ' </td> <td><a href="https://blog.dyboy.cn/go/?url=' + obj['domain'] +'" target="_blank" title="点击跳转">' + obj['domain'] + '</a></td></tr>');
                     });
                 } else {
                     layer.msg(data.data);

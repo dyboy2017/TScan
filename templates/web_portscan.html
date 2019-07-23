@@ -74,7 +74,7 @@
 {% block page_js %}
         function get_port_info(ip) {
             $.post('/api/portscan',{
-                url: ip
+                ip: ip
             }, function(data){
                 if(data.code != 200) {
                     $('.threatscan-result').hide();

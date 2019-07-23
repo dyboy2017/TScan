@@ -105,34 +105,15 @@ def port_scan(request):
     :return:
     """
     from .plugins.portscan.portscan import ScanPort
-    url = request.POST.get('url')
+    ip = request.POST.get('ip')
     open_port_list = []
     host = ''
-    if not url:
-        return error(400, '请填写正确的域名或IP', 'error')
-    if re.search(r'\d+\.\d+\.\d+\.\d+', url):
-        # 是IP地址则调用扫描
-        host = url
-    elif re.search(r'local|top15', url):
-        return error(400, '目标站点不可达', 'error')
+
+    if check_ip(ip):
+        open_port_list = ScanPort(ip).pool()
+        return success(200, open_port_list, 'ok!')
     else:
-        # 如果不是IP，那么就要通过域名获取IP
-        url = addslashes(url)
-        domain = getdomain(url)
-        if domain:
-            host = getdomainip(domain)
-        else:
-            host = ''
-    if host:
-        # IP地址有效
-        if not re.search(r'\d+\.\d+\.\d+\.\d+', host):
-            return error(400, '请填写正确的域名或IP', 'error')
-        if re.search('127.0.0.1|localhost', host):
-            return error(400, '目标站点不可达', 'error')
-        open_port_list = ScanPort(host).pool()
-    else:
-        return error(400, '请填写正确的域名或IP', 'error')
-    return success(200, open_port_list, 'ok!')
+        error(400, '请填写正确的IP地址', 'error')
 
 
 @csrf_exempt
@@ -141,9 +122,10 @@ def getwebsideinfo(request):
     ip = request.POST.get('ip')
     if check_ip(ip):
         result = get_side_info(ip)
+        print(result)
         if result:
-            success(200, result, 'ok')
+            return success(200, result, 'ok')
         else:
-            error(400, '未找到旁站信息！', 'error')
+            return error(400, '未找到旁站信息！', 'error')
     else:
         return error(400, 'IP不正确', 'error')
