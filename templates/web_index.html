@@ -1,0 +1,225 @@
+{% extends 'base.tpl' %}
+
+{% block title %} 网站基础信息获取 {% endblock %}
+
+{% block custom_css %} {% endblock %}
+
+{% block page_guider %}
+    <ul class="layui-nav">
+      <li class="layui-nav-item layui-this"><a href="/web/">基础信息</a></li>
+      <li class="layui-nav-item"><a href="/web/portscan">端口扫描</a></li>
+        <li class="layui-nav-item">
+        <a href="javascript:;">漏洞检测</a>
+        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+          <dd><a href="">SQL注入</a></dd>
+          <dd><a href="">XSS</a></dd>
+          <dd><a href="">信息泄漏</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">了解更多</a>
+        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+          <dd><a href="">使用帮助</a></dd>
+          <dd><a href="">打赏支持</a></dd>
+          <dd><a href="https://wpa.qq.com/msgrd?v=3&uin=1099718640&site=qq&menu=yes" target="_blank" title="发起QQ会话">联系作者</a></dd>
+          <dd><a href="https://wpa.qq.com/msgrd?v=3&uin=1099718640&site=qq&menu=yes" target="_blank" title="发起QQ会话">意见反馈/指纹提交</a></dd>
+        </dl>
+      </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <!-- 产品信息 -->
+    <div class="threatscan-title">
+        <h1> ThreatScan </h1>
+        <p>获取网站的IP、指纹、中间件、操作系统等基础信息</p>
+    </div>
+
+    <!-- 表单框/提交网址 -->
+    <div class="threatscan-search">
+        <div class="layui-form">
+            <div class="layui-form-item">
+              <div class="layui-input-inline">
+                <input type="text" name="site" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入正确的网址,例如 https://dyboy.cn" autocomplete="off" class="layui-input">
+              </div>
+              <button class="layui-btn layui-bg-blue layui-btn-lg btn-search">查询</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果展示区 -->
+    <div class="threatscan-result" style="display: none;margin-bottom: 150px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+          <legend>查询结果</legend>
+        </fieldset>
+
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+              <div class="layui-card">
+                <table class="layui-table" lay-even="" lay-skin="nob" style="width: 100%;margin: 10px 0;">
+                    <tbody>
+                        <tr>
+                            <td>域名</td>
+                            <td class="domain_name">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>源IP</td>
+                            <td class="source_ip">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CDN</td>
+                            <td class="cdn_isexsit">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>语言</td>
+                            <td class="script_lang">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>WAF</td>
+                            <td class="waf_name">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>操作系统</td>
+                            <td class="server_os">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>指纹框架</td>
+                            <td class="cms_finger">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Web容器</td>
+                            <td class="server_middleware">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>网站权重</td>
+                            <td class="site_weight">
+                                <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>域名信息</td>
+                            <td class="whois">
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+{% endblock %}
+
+{% block page_js %}
+    function get_base_info(domain){
+        // 发起网络请求
+        $.post('/api/baseinfo',{
+            url: domain
+        }, function(data){
+            $('.domain_name').text(data.data.domain || 'error');
+            $('.script_lang').text(data.data.language || 'error');
+            $('.server_os').text(data.data.os || 'error');
+            $('.server_middleware').text(data.data.server || 'error');
+            $('.domain_name').text(data.data.domain || 'error');
+            $('.source_ip').html(data.data.ip? data.data.ip.join('<br/>'): 'error');
+            $('.whois').html('******* <a href="https://blog.dyboy.cn/go/?url=http://whois.chinaz.com/' + (data.data.domain || 'www.qq.com') + '" target="_blank"> <button class="layui-btn layui-btn-sm layui-btn-danger">点击查看</button></a>');
+            layer.msg(data.msg);
+            
+            $(".btn-search").text('重新查询');
+            $('.btn-search').attr('disabled', false);
+        });
+    }
+
+    function get_site_weight(domain){
+        $.post('/api/webweight',{
+            url: domain
+        }, function(data){
+            $('.site_weight').text(data.data);
+        });
+
+    }
+
+    
+    function get_site_iscdn(domain){
+        $.post('/api/isexistcdn',{
+            url: domain
+        }, function(data){
+            $('.cdn_isexsit').text(data.data);
+        });
+
+    }
+
+
+    function get_site_waf(domain) {
+
+        $.post('/api/iswaf',{
+            url: domain
+        }, function(data){
+            $('.waf_name').text(data.data);
+        });
+    }
+
+
+    function get_site_cms(domain) {
+        $.post('/api/whatcms',{
+            url: domain
+        }, function(data){
+            $('.cms_finger').text(data.data);
+        });
+    }
+
+    $(function () {
+
+
+            $(".btn-search").click(function () {
+                $(this).attr('disabled', true);
+                if($(this).text() == '重新查询') {
+                    // 需要更新菊花
+                    $("td:odd").html('<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
+                }
+                $(this).text('请稍等');
+                let domain = $('input[name=site]').val();
+                if(domain){
+                    // 校验当前网址是否正确/符合规范
+                    // coding ...
+                    $('.threatscan-result').show();
+                    get_site_weight(domain);
+                    get_site_iscdn(domain);
+                    get_site_cms(domain);
+                    get_base_info(domain);
+                    get_site_waf(domain);       //最后请求，避免可能导致waf被拦截站点不可访问的问题
+
+                } else {
+                    $('input[name=site]').val('');
+                    layer.msg('请输入正确的网址');
+                    $(".btn-search").text('重新查询');
+                    $(".btn-search").attr('disabled', false);
+                }
+
+
+
+            })
+
+
+        });
+
+    });
+{% endblock %}
+

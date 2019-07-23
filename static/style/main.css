@@ -1,0 +1,97 @@
+
+
+/*
+*   web_index.html
+*/
+.layui-header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+.header-content{
+    width: 80%;
+    margin:0 auto;
+    overflow: hidden;
+}
+.layui-logo {
+    float: left;
+    position: relative;
+    left: 30px;
+    top: 5px;
+}
+.layui-bg-blue{
+    background-image: linear-gradient(90deg,#4e51ff 0%,#3eb9ff 100%);
+}
+.layui-nav {
+    position: absolute;
+    right: 30px;
+    background: none;
+}
+
+.threatscan-title {
+    color: #5d5d5d;
+    margin-top: 240px;
+    margin-bottom: 60px;
+    text-align: center;
+}
+.threatscan-title h1 {
+    margin-bottom: 5px;
+}
+
+.threatscan-search {
+    margin: 0 auto;
+    text-align: center;
+}
+.layui-form-item .layui-input-inline{
+    float: none;
+    width: 50%;
+}
+.layui-form-item .layui-input-inline input{
+    height: 44px;
+}
+.layui-btn-lg {
+    /* width: 100px; */
+    border-radius: 4px;
+}
+.layui-anim-loop {
+	color: #3afdff;
+}
+.footer{
+	position: fixed;
+    color: #333;
+    width: 100%;
+    text-align: center;
+    bottom: 15px;
+}
+.friend_links{
+	color: #888;
+}
+.friend_links ul li{
+	position: fixed;
+	list-style: none;
+	display:inline;
+	padding: 5px;
+	text-align: center;
+}
+.friend_links ul li a{
+	color: #888;
+	text-decoration: none;
+}
+.friend_links ul li a:hover{
+	color: #888;
+	text-decoration: none;
+}
+.description{
+	color: #888;
+	text-align: center;
+	font-size: 13px;
+    padding:5px;
+}
+.description p a{
+    color: #888;
+}
+.copyright{
+	display: inline;
+	font-size: 13px;
+    color:#888;
+}

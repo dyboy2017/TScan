@@ -1,37 +1,31 @@
 # ThreatScan
 
-#### 介绍
-网络资产安全扫描器
+> 在实习的时候，感觉每天都有做不完的需求，但忙碌的同时，也有零碎的休息时间，人们热衷于碎片化阅读，从另一个角度来看，不也是一种坚持吗？我觉得坚持做一件事情就很了不起，身为Coder的我，一直想要打造 一些黑客眼中想要的“一键Getshell”的软件，当然想法和现实是有差距的，所以先从整个扫描器开始啦！
 
-#### 软件架构
-软件架构说明
+ThreatScan 将在碎片化的时间内不断完善
 
 
-#### 安装教程
+## 更新记录
 
-1. xxxx
-2. xxxx
-3. xxxx
+#### 2019-7-11 19:08:28
 
-#### 使用说明
+- 构建基本框架
 
-1. xxxx
-2. xxxx
-3. xxxx
+#### 2019-7-15 17:42:58
 
-#### 参与贡献
+- dns查询 https://blog.csdn.net/ldczzzzzz/article/details/68926063
+- 端口扫描：https://github.com/se55i0n/PortScanner
+- banner查询：https://blog.csdn.net/fageweiketang/article/details/84433194
+- 请求头伪装：https://zhuanlan.zhihu.com/p/27436023
+- Vxscan：https://github.com/al0ne/Vxscan
+- ipaddress：https://docs.python.org/zh-cn/3.8/howto/ipaddress.html
+- geoip2: 下载数据
+    - http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz 
+    - http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+- https://github.com/aedoo/FastPortScan/blob/master/FastPortScan.py
+- https://github.com/k8gege/K8CScan
 
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
 
 
-#### 码云特技
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+
