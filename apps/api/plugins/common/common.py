@@ -77,32 +77,6 @@ def getdomain(url=''):
         return None
 
 
-def getwhatcms(url=''):
-    """
-    获取cms类型和相关框架的信息
-    :param url:
-    :return:
-    """
-    return_str = '未能识别，请联系管理员'
-    webinfo = {}
-    if url.startswith('https://') or url.startswith('http://'):
-        try:
-            html = requests.get(url=url, headers=get_ua(), timeout=4)
-            if html:
-                try:
-                    codetype = chardet.detect(html.content).get('encoding')
-                    html.encoding = codetype
-                    webinfo = WebPage(html.url, html.text, html.headers).info()
-                    print('[LOG WhatCms]:', webinfo)
-                except Exception as e:
-                    print('ErrorLog WhatCms:', e)
-        except Exception as e:
-            print('[LogError GetWhatCms]: ', e)
-        if webinfo:
-            return_str = '，'.join(webinfo.get('apps')) + '，Server【{}】'.format(webinfo.get('server'))
-    return return_str
-
-
 def getdomainip(host=''):
     """
     通过域名获取IP

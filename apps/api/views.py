@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
-from .plugins.common.common import success, error, addslashes, getwhatcms, getdomain, getdomainip
+from .plugins.common.common import success, error, addslashes, getdomain, getdomainip
 import re
 
 
@@ -89,6 +89,7 @@ def what_cms(request):
     :param request:
     :return:
     """
+    from .plugins.whatcms.whatcms import getwhatcms
     url = request.POST.get('url')
     if re.search('https://|http://', url):
         url = addslashes(url)

@@ -5,5 +5,4 @@ fake_useragent
 pygeoip
 ipaddress
 geoip2
-bs4
 chardet
