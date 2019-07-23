@@ -101,5 +101,20 @@ def getdomainip(host=''):
     return host
 
 
+def check_ip(ipAddr):
+    """
+    校验IP合法性
+    :param ipAddr:
+    :return:
+    """
+    if ipAddr:
+        rule = r'^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'
+        compile_ip = re.compile(rule)
+        if compile_ip.match(ipAddr):
+            return True
+    else:
+        return False
+
+
 if __name__ == '__main__':
     print('test')

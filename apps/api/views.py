@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
-from .plugins.common.common import success, error, addslashes, getdomain, getdomainip
+from .plugins.common.common import success, error, addslashes, getdomain, getdomainip, check_ip
 import re
 
 
@@ -113,6 +113,8 @@ def port_scan(request):
     if re.search(r'\d+\.\d+\.\d+\.\d+', url):
         # 是IP地址则调用扫描
         host = url
+    elif re.search(r'local|top15', url):
+        return error(400, '目标站点不可达', 'error')
     else:
         # 如果不是IP，那么就要通过域名获取IP
         url = addslashes(url)
@@ -132,3 +134,16 @@ def port_scan(request):
         return error(400, '请填写正确的域名或IP', 'error')
     return success(200, open_port_list, 'ok!')
 
+
+@csrf_exempt
+def getwebsideinfo(request):
+    from .plugins.webside.webside import get_side_info
+    ip = request.POST.get('ip')
+    if check_ip(ip):
+        result = get_side_info(ip)
+        if result:
+            success(200, result, 'ok')
+        else:
+            error(400, '未找到旁站信息！', 'error')
+    else:
+        return error(400, 'IP不正确', 'error')

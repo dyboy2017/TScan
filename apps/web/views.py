@@ -21,4 +21,6 @@ def portscan(request):
     return render(request, 'web_portscan.html')
 
 
+def webside(request):
+    return render(request, 'web_webside.html')
 

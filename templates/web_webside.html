@@ -1,14 +1,14 @@
 {% extends 'base.tpl' %}
 
-{% block title %} 端口扫描 {% endblock %}
+{% block title %} 旁站信息 {% endblock %}
 
 {% block custom_css %} {% endblock %}
 
 {% block page_guider %}
     <ul class="layui-nav layui-bg-blue">
         <li class="layui-nav-item"><a href="/web/">基础信息</a></li>
-        <li class="layui-nav-item layui-this"><a href="/web/portscan">端口扫描</a></li>
-        <li class="layui-nav-item"><a href="/web/webside">旁站扫描</a></li>
+        <li class="layui-nav-item"><a href="/web/portscan">端口扫描</a></li>
+        <li class="layui-nav-item layui-this"><a href="/web/webside">旁站扫描</a></li>
         <li class="layui-nav-item">
         <a href="javascript:;">漏洞检测</a>
         <dl class="layui-nav-child"> <!-- 二级菜单 -->
@@ -31,8 +31,8 @@
 {% block content %}
     <!-- 产品信息 -->
     <div class="threatscan-title">
-        <h1> 端口扫描 </h1>
-        <p>扫描常见398个端口，填写IP，扫描结果更准确哦！</p>
+        <h1> 旁站信息 </h1>
+        <p>通过IP地址，直接获取当前IP所有绑定的网站信息</p>
     </div>
 
     <!-- 表单框/提交网址 -->
@@ -40,9 +40,9 @@
         <div class="layui-form">
             <div class="layui-form-item">
               <div class="layui-input-inline">
-                <input type="text" name="siteip" maxlength="15" required="" lay-verify="required" lay-vertype="tips" placeholder="IP或域名" autocomplete="off" class="layui-input">
+                <input type="text" name="siteip" maxlength="15" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入IP地址" autocomplete="off" class="layui-input">
               </div>
-              <button class="layui-btn layui-bg-blue layui-btn-lg btn-scan">扫描端口</button>
+              <button class="layui-btn layui-bg-blue layui-btn-lg btn-scan">获取旁站</button>
             </div>
         </div>
     </div>
@@ -58,11 +58,7 @@
               <div class="layui-card">
                 <table class="layui-table" lay-even="" lay-skin="nob" style="width: 100%;margin: 10px 0;">
                     <tbody>
-                        <tr>
-                            <td>
-                                多线程扫描，预计请等待<span>10</span>>s &nbsp;<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
-                            </td>
-                        </tr>
+                        <tr> <td>网站标题</td> <td>同IP网站URL</td> </tr>
                     </tbody>
                 </table>
               </div>
@@ -72,24 +68,18 @@
 {% endblock %}
 
 {% block page_js %}
-        function get_port_info(ip) {
-            $.post('/api/portscan',{
+        function get_webside_info(ip) {
+            $.post('/api/getwebside',{
                 url: ip
             }, function(data){
-                if(data.code != 200) {
-                    $('.threatscan-result').hide();
-                    layer.msg(data.data);
-                }
-                else{
-                    $('tbody tr:first').html("<tr><td><strong>端口</strong></td><td><strong>协议/服务</strong></td></tr>");
-                    var tr_html = ''
-                    $.each(data.data, function(index, obj) {
-                        let obj_arr = obj.split(':');
-                        $('tbody').append("<tr><td>" + obj_arr[1] + "</td><td>" + obj_arr[0] + "</td></tr>");
+                if(data.code == 200){
+                    $.each(data.data, function(index, obj){
+                        $('tbody').append('<tr><td> ' + obj['title'] + ' </td> <td><a href="https://blog.dyboy.cn/go/?url=' + obj['domain'] +'" target="_blank">' + obj['domain'] + '</a></td></tr>');
                     });
-                    layer.msg('查询成功');
+                } else {
+                    layer.msg(data.data);
+                    $('input[name=siteip]').val('');
                 }
-
                 $(".btn-scan").text('重新扫描');
                 $('.btn-scan').attr('disabled', false);
             });
@@ -99,17 +89,16 @@
             $(".btn-scan").click(function () {
                 $(this).attr('disabled', true);
                 $(this).text('请稍等');
-                var domain = $('input[name=siteip]').val();
-                if(domain){
+                var ip_addr = $('input[name=siteip]').val();
+                if(ip_addr){
                     // 校验当前网址是否正确/符合规范
                     // coding ...
-                    $('tbody').html('<tr> <td> 多线程扫描，预计请等待<span>10</span>s &nbsp;<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></td> </tr>');
                     $('.threatscan-result').show();
-                    get_port_info(domain);
+                    get_webside_info(ip_addr);
                 } else {
                     $('input[name=siteip]').val('');
-                    layer.msg('请输入正确的IP或域名\n输入IP查询更准确哦！');
-                    $(".btn-scan").text('查询');
+                    layer.msg('请输入正确的IP地址，IP查询更精准！');
+                    $(".btn-scan").text('获取旁站');
                     $(".btn-scan").attr('disabled', false);
                 }
             });

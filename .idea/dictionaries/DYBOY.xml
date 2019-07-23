@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="DYBOY">
     <words>
+      <w>addr</w>
       <w>addrs</w>
       <w>aizhan</w>
       <w>baseinfo</w>
@@ -14,6 +15,8 @@
       <w>getdomainip</w>
       <w>gethtml</w>
       <w>getwaf</w>
+      <w>getwebside</w>
+      <w>getwebsideinfo</w>
       <w>getwhatcms</w>
       <w>ipaddr</w>
       <w>iscdn</w>
@@ -22,6 +25,7 @@
       <w>layui</w>
       <w>oows</w>
       <w>portscan</w>
+      <w>siteip</w>
       <w>sogou</w>
       <w>sougou</w>
       <w>sstr</w>
@@ -30,6 +34,7 @@
       <w>threatscan</w>
       <w>webinfo</w>
       <w>webscan</w>
+      <w>webside</w>
       <w>webweight</w>
       <w>whatcms</w>
       <w>whois</w>
