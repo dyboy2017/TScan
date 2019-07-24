@@ -27,6 +27,9 @@
     right: 30px;
     background: none;
 }
+.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this {
+    background-image: linear-gradient(90deg, #3eb9ff 0%, #4e51ff 100%);
+}
 
 .threatscan-title {
     color: #5d5d5d;

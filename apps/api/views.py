@@ -105,15 +105,14 @@ def port_scan(request):
     :return:
     """
     from .plugins.portscan.portscan import ScanPort
-    ip = request.POST.get('ip')
+    ip = request.POST.get('ip').strip()
     open_port_list = []
     host = ''
-
     if check_ip(ip):
         open_port_list = ScanPort(ip).pool()
         return success(200, open_port_list, 'ok!')
     else:
-        error(400, '请填写正确的IP地址', 'error')
+        return error(400, '请填写正确的IP地址', 'error')
 
 
 @csrf_exempt
@@ -122,7 +121,6 @@ def getwebsideinfo(request):
     ip = request.POST.get('ip')
     if check_ip(ip):
         result = get_side_info(ip)
-        print(result)
         if result:
             return success(200, result, 'ok')
         else:

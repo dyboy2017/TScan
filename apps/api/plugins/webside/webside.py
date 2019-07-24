@@ -27,10 +27,8 @@ def get_side_info(ip):
     try:
         html = requests.post(api_url, data=query_data, headers=header, timeout=8)
         text = html.text
-
         if text.startswith(u'\ufeff'):
             text = text.encode('utf8')[3:].decode('utf8')
-        print(text)
         if text.find('null') > -1:
             print('[LogError WebSide]: ', 'The webside info is null')
             return False
