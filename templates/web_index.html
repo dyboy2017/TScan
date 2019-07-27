@@ -9,14 +9,7 @@
         <li class="layui-nav-item layui-this"><a href="/web/">基础信息</a></li>
         <li class="layui-nav-item"><a href="/web/portscan">端口扫描</a></li>
         <li class="layui-nav-item"><a href="/web/webside">旁站扫描</a></li>
-        <li class="layui-nav-item">
-        <a href="javascript:;">漏洞检测</a>
-        <dl class="layui-nav-child"> <!-- 二级菜单 -->
-          <dd><a href="javascript:;" onclick="layer.msg('内测中...')">SQL注入</a></dd>
-          <dd><a href="javascript:;" onclick="layer.msg('内测中...')">XSS</a></dd>
-          <dd><a href="">信息泄漏</a></dd>
-        </dl>
-      </li>
+        <li class="layui-nav-item"><a href="/web/infoleak">信息泄漏</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">了解更多</a>
         <dl class="layui-nav-child"> <!-- 二级菜单 -->
@@ -41,7 +34,7 @@
         <div class="layui-form">
             <div class="layui-form-item">
               <div class="layui-input-inline">
-                <input type="text" name="site" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入正确的网址,例如 https://dyboy.cn" autocomplete="off" class="layui-input">
+                <input type="text" name="site" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入正确的网址,例如 http://example.cn" autocomplete="off" class="layui-input">
               </div>
               <button class="layui-btn layui-bg-blue layui-btn-lg btn-search">指纹查询</button>
             </div>
@@ -209,7 +202,7 @@
 
                 } else {
                     $('input[name=site]').val('');
-                    layer.msg('请输入正确的网址');
+                    layer.msg('请输入正确的网址，\n例如：http://example.cn');
                     $(".btn-search").text('重新查询');
                     $(".btn-search").attr('disabled', false);
                 }

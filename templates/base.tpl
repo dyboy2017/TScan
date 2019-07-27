@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>{% block title %}首页{% endblock %} - ThreatScan - 免费的网站在线安全检测平台</title>
+        <title>{% block title %}首页{% endblock %} - ThreatScan - 免费的网站在线安全检测平台-TScan</title>
         <link rel="icon" href="/static/img/favicon.ico">
         <link rel="stylesheet" href="/static/plugins/layui/css/layui.css">
         <link rel="stylesheet" href="/static/style/main.css">

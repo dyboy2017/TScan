@@ -22,5 +22,18 @@ def portscan(request):
 
 
 def webside(request):
+    """
+    旁站信息
+    :param request:
+    :return:
+    """
     return render(request, 'web_webside.html')
 
+
+def infoleak(request):
+    """
+    信息泄漏检查
+    :param request:
+    :return:
+    """
+    return render(request, 'web_infoleak.html')

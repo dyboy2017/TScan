@@ -9,7 +9,7 @@ import chardet
 from ..randheader.randheader import get_ua
 from bs4 import BeautifulSoup
 
-# Refrenece: https://github.com/boy-hack/w8scan
+# Reference: https://github.com/boy-hack/w8scan
 
 
 class WebPage(object):
@@ -263,7 +263,6 @@ class Wappalyzer(object):
             categorised_apps[app_name] = {"categories": cat_names}
 
         return categorised_apps
-
 
 
 def getwhatcms(url=''):

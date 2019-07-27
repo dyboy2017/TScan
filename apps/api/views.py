@@ -127,3 +127,12 @@ def getwebsideinfo(request):
             return error(400, '未找到旁站信息！', 'error')
     else:
         return error(400, 'IP不正确', 'error')
+
+
+@csrf_exempt
+def getinfoleak(request):
+    from .plugins.infoleak.infoleak import get_infoleak
+    url = request.POST.get('url')
+    if url:
+        return success(200, get_infoleak(url), 'ok')
+    return error(400, '参数错误', 'error')

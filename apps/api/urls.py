@@ -4,7 +4,8 @@ from . import views
 
 # 配置URL
 urlpatterns = [
-    path('getwebside', views.getwebsideinfo, name='getwebsideinfo'),
+    path('infoleak', views.getinfoleak, name="infoleak"),
+    path('getwebside', views.getwebsideinfo, name='websideinfo'),
     path('portscan', views.port_scan, name='portscan'),
     path('whatcms', views.what_cms, name='whatcms'),
     path('iswaf', views.is_waf, name='iswaf'),

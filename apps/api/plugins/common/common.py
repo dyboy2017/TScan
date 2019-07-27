@@ -2,12 +2,8 @@
 
 from django.http import HttpResponse
 import json
-import requests
 import re
 import socket
-import chardet
-from ..randheader.randheader import get_ua
-from ..whatcms.whatcms import WebPage
 
 
 """
@@ -114,6 +110,9 @@ def check_ip(ipAddr):
             return True
     else:
         return False
+
+
+
 
 
 if __name__ == '__main__':

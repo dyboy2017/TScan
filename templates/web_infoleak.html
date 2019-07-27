@@ -1,15 +1,15 @@
 {% extends 'base.tpl' %}
 
-{% block title %} 端口扫描 {% endblock %}
+{% block title %} 信息泄漏 {% endblock %}
 
 {% block custom_css %} {% endblock %}
 
 {% block page_guider %}
     <ul class="layui-nav layui-bg-blue">
         <li class="layui-nav-item"><a href="/web/">基础信息</a></li>
-        <li class="layui-nav-item layui-this"><a href="/web/portscan">端口扫描</a></li>
+        <li class="layui-nav-item"><a href="/web/portscan">端口扫描</a></li>
         <li class="layui-nav-item"><a href="/web/webside">旁站扫描</a></li>
-        <li class="layui-nav-item"><a href="/web/infoleak">信息泄漏</a></li>
+        <li class="layui-nav-item layui-this"><a href="/web/infoleak">信息泄漏</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">了解更多</a>
         <dl class="layui-nav-child"> <!-- 二级菜单 -->
@@ -25,8 +25,8 @@
 {% block content %}
     <!-- 产品信息 -->
     <div class="threatscan-title">
-        <h1> 端口扫描 </h1>
-        <p>扫描常见398个端口，填写IP，扫描结果更准确哦！</p>
+        <h1> 信息泄漏检查 </h1>
+        <p>通过批量扫描检查是否存在信息泄漏问题</p>
     </div>
 
     <!-- 表单框/提交网址 -->
@@ -34,9 +34,9 @@
         <div class="layui-form">
             <div class="layui-form-item">
               <div class="layui-input-inline">
-                <input type="text" name="siteip" maxlength="15" required="" lay-verify="required" lay-vertype="tips" placeholder="IP或域名" autocomplete="off" class="layui-input">
+                <input type="text" name="siteurl" maxlength="30" required="" lay-verify="required" lay-vertype="tips" placeholder="请输入URL" autocomplete="off" class="layui-input">
               </div>
-              <button class="layui-btn layui-bg-blue layui-btn-lg btn-scan">扫描端口</button>
+              <button class="layui-btn layui-bg-blue layui-btn-lg btn-scan">泄漏检查</button>
             </div>
         </div>
     </div>
@@ -46,17 +46,12 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
           <legend>查询结果</legend>
         </fieldset>
-
           <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
               <div class="layui-card">
                 <table class="layui-table" lay-even="" lay-skin="nob" style="width: 100%;margin: 10px 0;">
                     <tbody>
-                        <tr>
-                            <td>
-                                多线程扫描，预计请等待<span>10</span>>s &nbsp;<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
-                            </td>
-                        </tr>
+                        <tr> <td>类型</td> <td>存在信息泄漏URL</td> </tr>
                     </tbody>
                 </table>
               </div>
@@ -66,24 +61,18 @@
 {% endblock %}
 
 {% block page_js %}
-        function get_port_info(ip) {
-            $.post('/api/portscan',{
-                ip: ip
+        function get_webside_info(url) {
+            $.post('/api/infoleak',{
+                url: url
             }, function(data){
-                if(data.code != 200) {
-                    $('.threatscan-result').hide();
-                    layer.msg(data.data);
-                }
-                else{
-                    $('tbody tr:first').html("<tr><td><strong>端口</strong></td><td><strong>协议/服务</strong></td></tr>");
-                    var tr_html = ''
-                    $.each(data.data, function(index, obj) {
-                        let obj_arr = obj.split(':');
-                        $('tbody').append("<tr><td>" + obj_arr[1] + "</td><td>" + obj_arr[0] + "</td></tr>");
+                if(data.code == 200){
+                    $.each(data.data, function(index, obj){
+                        $('tbody').append('<tr><td> ' + obj[0] + ' </td> <td><a href="https://blog.dyboy.cn/go/?url=' + obj[1] +'" target="_blank" title="点击跳转">' + obj[1] + '</a></td></tr>');
                     });
-                    layer.msg('查询成功');
+                } else {
+                    layer.msg(data.data);
+                    $('input[name=siteip]').val('');
                 }
-
                 $(".btn-scan").text('重新扫描');
                 $('.btn-scan').attr('disabled', false);
             });
@@ -92,18 +81,17 @@
         $(function () {
             $(".btn-scan").click(function () {
                 $(this).attr('disabled', true);
-                $(this).text('请稍等');
-                var domain = $('input[name=siteip]').val();
-                if(domain){
+                $(this).html('请稍等 <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
+                var url = $('input[name=siteurl]').val();
+                if(url){
                     // 校验当前网址是否正确/符合规范
                     // coding ...
-                    $('tbody').html('<tr> <td> 多线程扫描，预计请等待<span>10</span>s &nbsp;<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i></td> </tr>');
                     $('.threatscan-result').show();
-                    get_port_info(domain);
+                    get_webside_info(url);
                 } else {
                     $('input[name=siteip]').val('');
-                    layer.msg('请输入正确的IP或域名\n输入IP查询更准确哦！');
-                    $(".btn-scan").text('查询');
+                    layer.msg('请输入正确的URL，\n例如:http://example.cn');
+                    $(".btn-scan").text('泄漏检查');
                     $(".btn-scan").attr('disabled', false);
                 }
             });

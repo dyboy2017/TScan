@@ -4,6 +4,7 @@
       <w>addr</w>
       <w>addrs</w>
       <w>aizhan</w>
+      <w>anim</w>
       <w>baseinfo</w>
       <w>cdncheck</w>
       <w>checkwaf</w>
@@ -15,10 +16,12 @@
       <w>getbaseinfo</w>
       <w>getdomainip</w>
       <w>gethtml</w>
+      <w>getinfoleak</w>
       <w>getwaf</w>
       <w>getwebside</w>
       <w>getwebsideinfo</w>
       <w>getwhatcms</w>
+      <w>infoleak</w>
       <w>ipaddr</w>
       <w>iscdn</w>
       <w>isexistcdn</w>
@@ -27,15 +30,18 @@
       <w>oows</w>
       <w>portscan</w>
       <w>siteip</w>
+      <w>siteurl</w>
       <w>sogou</w>
       <w>sougou</w>
       <w>sstr</w>
       <w>tbody</w>
       <w>testurl</w>
       <w>threatscan</w>
+      <w>wappalyzer</w>
       <w>webinfo</w>
       <w>webscan</w>
       <w>webside</w>
+      <w>websideinfo</w>
       <w>webweight</w>
       <w>whatcms</w>
       <w>whois</w>
