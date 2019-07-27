@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
-from .plugins.common.common import success, error, addslashes, getdomain, getdomainip, check_ip
+from .plugins.common.common import success, error, addslashes, getdomain, getdomainip, check_ip, check_url
 import re
 
 
@@ -11,7 +11,7 @@ def index(request):
     :param request:
     :return:
     """
-    return error(404, '', 'Not Found!')
+    return error(404, '骚年，你想干嘛！', 'https://blog.dyboy.cn')
 
 
 @csrf_exempt
@@ -22,11 +22,11 @@ def baseinfo(request):
     :return:
     """
     from .plugins.baseinfo.baseinfo import getbaseinfo
-    if request.POST.get('url'):
-        testurl = addslashes(request.POST.get('url'))
-        res = getbaseinfo(testurl)
+    url = check_url(request.POST.get('url'))
+    if url:
+        res = getbaseinfo(url)
         return success(res['code'], res, res['msg'])
-    return error(400, '', 'URL NULL!')
+    return error(400, '请填写正确的URL地址', '请输入正确的网址， 例如：http://example.cn')
 
 
 @csrf_exempt
@@ -37,12 +37,11 @@ def webweight(request):
     :return:
     """
     from .plugins.webweight.webweight import get_web_weight
-    if request.POST.get('url'):
-        testurl = addslashes(request.POST.get('url'))
-        print('[Log TargetWebsite]: ', testurl)
-        return success(200, get_web_weight(testurl), 'Found!')
-    else:
-        return error(400, '', 'URL NULL!')
+    url = check_url(request.POST.get('url'))
+    if url:
+        print('[Log TargetWebsite]: ', url)
+        return success(200, get_web_weight(url), 'ok')
+    return error(400, '请填写正确的URL地址', 'error')
 
 
 @csrf_exempt
@@ -53,18 +52,17 @@ def isexistcdn(request):
     :return:
     """
     from .plugins.cdnexist.cdnexist import iscdn
-    if request.POST.get('url'):
-        testurl = addslashes(request.POST.get('url'))
-        result_str = iscdn(testurl)
+    url = check_url(request.POST.get('url'))
+    if url:
+        result_str = iscdn(url)
         if result_str == '目标站点不可访问':
-            return success(200, result_str, 'Internet error!')
+            return success(200, result_str, '网络错误')
         if result_str:
             result_str = '存在CDN（源IP可能不正确）'
         else:
             result_str = '无CDN'
         return success(200, result_str, 'Success!')
-    else:
-        return error(400, '', 'URL NULL!')
+    return error(400, '请填写正确的URL地址', 'error')
 
 
 @csrf_exempt
@@ -75,11 +73,10 @@ def is_waf(request):
     :return:
     """
     from .plugins.waf.waf import getwaf
-    result_str = "URL错误"
-    if request.POST.get('url'):
-        testurl = addslashes(request.POST.get('url'))
-        result_str = getwaf(testurl)
-    return success(200, result_str, '')
+    url = check_url(request.POST.get('url'))
+    if url:
+        return success(200, getwaf(url), 'ok')
+    return error(400, '请填写正确的URL地址', 'error')
 
 
 @csrf_exempt
@@ -90,11 +87,10 @@ def what_cms(request):
     :return:
     """
     from .plugins.whatcms.whatcms import getwhatcms
-    url = request.POST.get('url')
-    if re.search('https://|http://', url):
-        url = addslashes(url)
-        return success(200, getwhatcms(url), 'Got')
-    return error(400, 'URL错误', '')
+    url = check_url(request.POST.get('url'))
+    if url:
+        return success(200, getwhatcms(url), 'ok')
+    return error(400, '请填写正确的URL地址', 'error')
 
 
 @csrf_exempt
@@ -105,34 +101,38 @@ def port_scan(request):
     :return:
     """
     from .plugins.portscan.portscan import ScanPort
-    ip = request.POST.get('ip').strip()
-    open_port_list = []
-    host = ''
+    ip = request.POST.get('ip')
     if check_ip(ip):
-        open_port_list = ScanPort(ip).pool()
-        return success(200, open_port_list, 'ok!')
-    else:
-        return error(400, '请填写正确的IP地址', 'error')
+        return success(200, ScanPort(ip).pool(), 'ok!')
+    return error(400, '请填写正确的IP地址', 'error')
 
 
 @csrf_exempt
 def getwebsideinfo(request):
+    """
+    获取旁站信息
+    :param request:
+    :return:
+    """
     from .plugins.webside.webside import get_side_info
     ip = request.POST.get('ip')
     if check_ip(ip):
         result = get_side_info(ip)
         if result:
             return success(200, result, 'ok')
-        else:
-            return error(400, '未找到旁站信息！', 'error')
-    else:
-        return error(400, 'IP不正确', 'error')
+        return error(400, '未找到旁站信息！', 'error')
+    return error(400, '请填写正确的IP地址', 'error')
 
 
 @csrf_exempt
 def getinfoleak(request):
+    """
+    信息泄漏检测
+    :param request:
+    :return:
+    """
     from .plugins.infoleak.infoleak import get_infoleak
-    url = request.POST.get('url')
+    url = check_url(request.POST.get('url'))
     if url:
         return success(200, get_infoleak(url), 'ok')
-    return error(400, '参数错误', 'error')
+    return error(400, '请填写正确的URL', 'error')

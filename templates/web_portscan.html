@@ -34,7 +34,7 @@
         <div class="layui-form">
             <div class="layui-form-item">
               <div class="layui-input-inline">
-                <input type="text" name="siteip" maxlength="15" required="" lay-verify="required" lay-vertype="tips" placeholder="IP或域名" autocomplete="off" class="layui-input">
+                <input type="text" name="siteip" minlength="15" maxlength="15" required="" lay-verify="required" lay-vertype="tips" placeholder="请填写正确的IP地址" autocomplete="off" class="layui-input">
               </div>
               <button class="layui-btn layui-bg-blue layui-btn-lg btn-scan">扫描端口</button>
             </div>
@@ -102,7 +102,7 @@
                     get_port_info(domain);
                 } else {
                     $('input[name=siteip]').val('');
-                    layer.msg('请输入正确的IP或域名\n输入IP查询更准确哦！');
+                    layer.msg('请输入正确的IP，例如：1.1.1.1');
                     $(".btn-scan").text('查询');
                     $(".btn-scan").attr('disabled', false);
                 }

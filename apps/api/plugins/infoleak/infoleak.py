@@ -4,7 +4,7 @@ import json
 import requests
 from ..randheader.randheader import get_ua
 
-STATUS_CODES = [200, 401, 305, 407]           # HTTP响应状态码
+STATUS_CODES = [200, 401, 305, 407]           # HTTP响应状态码，判断认为存在风险链接的状态码
 
 
 def get_html(url=''):
@@ -25,20 +25,24 @@ def get_html(url=''):
 
 
 def get_infoleak(url=''):
-    if url:
-        file_path = os.path.dirname(__file__) + '/../../database/infoleak.json'
-        fp = open(file_path, 'r', encoding='utf-8')
-        json_data = json.load(fp)
-        result = []
-        for key in json_data['data'][0]:
-            payloads = json_data['data'][0][key]
-            for payload in payloads:
-                # 开始尝试访问
-                url_payload = url + payload
-                if get_html(url_payload):
-                    result.append([key, url_payload])
-        fp.close()
-        return result
+    """
+    尝试访问风险链接
+    :param url:
+    :return:
+    """
+    file_path = os.path.dirname(__file__) + '/../../database/infoleak.json'     # 配置文件 database/infoleak.json
+    fp = open(file_path, 'r', encoding='utf-8')
+    json_data = json.load(fp)
+    result = []
+    for key in json_data['data'][0]:
+        payloads = json_data['data'][0][key]
+        for payload in payloads:
+            # 开始尝试访问
+            url_payload = url + payload
+            if get_html(url_payload):
+                result.append([key, url_payload])
+    fp.close()
+    return result
 
 
 if __name__ == '__main__':

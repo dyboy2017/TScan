@@ -1,0 +1,8 @@
+django == 2.2.3
+requests
+dnspython
+fake_useragent
+pygeoip
+ipaddress
+geoip2
+chardet

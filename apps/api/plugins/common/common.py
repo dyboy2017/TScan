@@ -5,6 +5,8 @@ import json
 import re
 import socket
 
+FORBIDDEN_DOMAIN = '127.*.*.*|192.168.*.*|local|gov.cn|top15.cn|dyboy'
+FORBIDDEN_IP = '127.*.*.*|192.168.*.*|10.*.*.*|172.(1[6-9]|2[0-9]|31).*.*'
 
 """
 通用函数/公共函数
@@ -59,25 +61,19 @@ def getdomain(url=''):
     :param url:
     :return:
     """
-    url = url.rstrip('/')        # 去除末尾/，获取域名部分
+    url = check_url(url)
     if url:
-        if re.search('127.0.0.1|localhost', url):
-            return 'None'
-        if url.startswith('https://') or url.startswith('http://'):
-            domain = url.split('/')[2]  # 获取域名
-            print('[LOG GetDomain]: ', domain)
-            return domain
-        else:
-            return None
-    else:
-        return None
+        domain = url.split('/')[2]  # 获取域名
+        print('[LOG GetDomain]: ', domain)
+        return domain
+    return None
 
 
 def getdomainip(host=''):
     """
     通过域名获取IP
     :param host:
-    :return:
+    :return: ip | 'string'
     """
     # 如果是URL，则通过DNS解析获取其IP
     if not re.search(r'\d+\.\d+\.\d+\.\d+', host):
@@ -89,7 +85,7 @@ def getdomainip(host=''):
             except Exception as e:
                 host = ''
                 print('[LogError IsCdn-GetHostName]: ', e)
-    if re.search('127.0.0.1', host):
+    if re.search('127.0.0.1|localhost|top15.cn|gov.cn|edu.cn', host):
         return '目标站点不可访问'
     if not host:
         print("[LogError IsCdn]: Host not matched!")
@@ -97,22 +93,45 @@ def getdomainip(host=''):
     return host
 
 
-def check_ip(ipAddr):
+def check_ip(ipaddr=''):
     """
     校验IP合法性
-    :param ipAddr:
-    :return:
+    :param ipaddr:
+    :return: True|False
     """
-    if ipAddr:
+    ipaddr = str(ipaddr)
+    if (6 < len(ipaddr)) and (len(ipaddr) < 16):
+        if re.search(FORBIDDEN_IP, ipaddr):
+            return False
+        # IP地址的长度范围(6, 16)
         rule = r'^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'
         compile_ip = re.compile(rule)
-        if compile_ip.match(ipAddr):
+        if compile_ip.match(ipaddr):
             return True
-    else:
-        return False
+    return False
 
 
-
+def check_url(url=''):
+    """
+    校验URL合法性
+    :param url:
+    :return: 合法的URL | False
+    """
+    url = (str(url)).strip().replace('"', '').replace("'", '').replace('<', '').replace('>', '').replace(';', '')\
+        .replace('\\', '/')
+    if (10 < len(url)) and (len(url) < 40):
+        # 链接长度(10, 40)，否则认为不合法 http://a.cn
+        if re.search(FORBIDDEN_DOMAIN, url):
+            # 判断是否在禁止域名/IP
+            return False
+        if url.startswith('http://') or url.startswith('https://'):
+            # URL是否以http://或https://开头
+            url_params = url.split('/')
+            domain = url_params[2]
+            if domain.find('.') >= 0:
+                # URL中的域名是否至少含有一个‘.’，返回全小写URL
+                return url.lower()
+    return False
 
 
 if __name__ == '__main__':
