@@ -8,6 +8,8 @@ from ..randheader.randheader import get_ua
 STATUS_CODES = [200, 206, 401, 305, 407]           # HTTP响应状态码，判断认为存在风险链接的状态码
 RESULT = []
 
+THREADMAX = threading.BoundedSemaphore(30)    # 限制线程的最大数量为50个
+
 
 def get_html(url=''):
     """
@@ -34,11 +36,12 @@ def get_html2(url='', key=''):
     """
     if url:
         try:
-            response = requests.get(url, headers=get_ua(), timeout=3, allow_redirects=False)
+            response = requests.get(url, headers=get_ua(), timeout=3, allow_redirects=False, varify=False)
             if response.status_code in STATUS_CODES:
                 RESULT.append([key, url])
         except Exception as e:
             print('[LogError infoleak]: ', e)
+    THREADMAX.release()
 
 
 def get_infoleak(url=''):
@@ -65,7 +68,16 @@ def get_infoleak(url=''):
             # if get_html(url_payload):
             #     result.append([key, url_payload])
 
+    """
+        由于，线程不能无限增加
+        远程站点，也会限制并发数
+        所以这里需要设置线程数为50
+        因为需要扫描的规则比较多
+        针对超时或者没获取到的，不加入结果列表
+    """
+
     for item in payload_list:
+        THREADMAX.acquire()
         thd = threading.Thread(target=get_html2, args=(item[1], item[0], ))
         thd.start()
         thread_list.append(thd)
