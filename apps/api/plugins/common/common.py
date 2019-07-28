@@ -5,8 +5,9 @@ import json
 import re
 import socket
 
+# 禁止扫描的IP和域名
 FORBIDDEN_DOMAIN = '127.*.*.*|192.168.*.*|local|gov.cn|top15.cn|dyboy'
-FORBIDDEN_IP = '127.*.*.*|192.168.*.*|10.*.*.*|172.(1[6-9]|2[0-9]|31).*.*'
+FORBIDDEN_IP = '127.*.*.*|192.168.*.*|10.*.*.*|172.(1[6-9]|2[0-9]|31).*.*|120.55.58.175'
 
 """
 通用函数/公共函数
@@ -85,7 +86,7 @@ def getdomainip(host=''):
             except Exception as e:
                 host = ''
                 print('[LogError IsCdn-GetHostName]: ', e)
-    if re.search('127.0.0.1|localhost|top15.cn|gov.cn|edu.cn', host):
+    if re.search(FORBIDDEN_IP, host):
         return '目标站点不可访问'
     if not host:
         print("[LogError IsCdn]: Host not matched!")

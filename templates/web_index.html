@@ -162,7 +162,6 @@
 
 
     function get_site_waf(domain) {
-
         $.post('/api/iswaf',{
             url: domain
         }, function(data){
@@ -180,8 +179,6 @@
     }
 
     $(function () {
-
-
             $(".btn-search").click(function () {
                 $(this).attr('disabled', true);
                 if($(this).text() == '重新查询') {

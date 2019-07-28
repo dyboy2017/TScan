@@ -87,6 +87,9 @@
                 if(ip_addr){
                     // 校验当前网址是否正确/符合规范
                     // coding ...
+                    if($('.btn-scan').text() == '重新扫描') {
+                        $("tbody tr:not(:first)").remove();
+                    }
                     $('.threatscan-result').show();
                     get_webside_info(ip_addr);
                 } else {
