@@ -3,9 +3,5 @@ geoip2==2.9.0
 fake_useragent==0.1.11
 chardet==3.0.4
 Django==2.2.3
-django-crispy-forms==1.7.2
-django-formtools==2.1
-django-import-export==1.1.0
-django-reversion==3.0.0
 beautifulsoup4==4.6.0
 ipaddress==1.0.22
