@@ -43,7 +43,7 @@
             {% block page_js %}
 
             {% endblock %}
-
         </script>
+        <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "https://hm.baidu.com/hm.js?a8569fd6981018f096d774868306a054";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script>
     </body>
 </html>

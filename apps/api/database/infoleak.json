@@ -15,7 +15,9 @@
       "Tomcat Manager": [
         "/manager/html",
         "/examples/servlets/servlet/SessionExample",
-        "/examples/"
+        "/examples/",
+        "/docs/setup.html",
+        "/examples/servlets/servlet/SessionExample"
       ],
       "测试网页": [
         "/test.php",
