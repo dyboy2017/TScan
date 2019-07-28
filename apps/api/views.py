@@ -62,7 +62,7 @@ def isexistcdn(request):
         else:
             result_str = '无CDN'
         return success(200, result_str, 'Success!')
-    return error(400, '请填写正确的URL地址', 'error')
+    return error(400, '请填写正确的IP地址', 'error')
 
 
 @csrf_exempt
@@ -135,4 +135,4 @@ def getinfoleak(request):
     url = check_url(request.POST.get('url'))
     if url:
         return success(200, get_infoleak(url), 'ok')
-    return error(400, '请填写正确的URL', 'error')
+    return error(400, '请填写正确的URL地址', 'error')

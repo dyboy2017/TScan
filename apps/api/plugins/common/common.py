@@ -6,8 +6,8 @@ import re
 import socket
 
 # 禁止扫描的IP和域名
-FORBIDDEN_DOMAIN = '127.*.*.*|192.168.*.*|local|gov.cn|top15.cn|dyboy'
-FORBIDDEN_IP = '127.*.*.*|192.168.*.*|10.*.*.*|172.(1[6-9]|2[0-9]|31).*.*|120.55.58.175'
+FORBIDDEN_DOMAIN = '^127.*.*.*|^192.168.*.*|^local|gov.cn|top15.cn|dyboy'
+FORBIDDEN_IP = '^127.*.*.*|^192.168.*.*|^10.*.*.*|^172.(1[6-9]|2[0-9]|31).*.*|^120.55.58.175'
 
 """
 通用函数/公共函数
@@ -100,7 +100,7 @@ def check_ip(ipaddr=''):
     :param ipaddr:
     :return: True|False
     """
-    ipaddr = str(ipaddr)
+    ipaddr = (str(ipaddr)).strip()
     if (6 < len(ipaddr)) and (len(ipaddr) < 16):
         if re.search(FORBIDDEN_IP, ipaddr):
             return False
