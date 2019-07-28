@@ -2,7 +2,6 @@
 
 import requests
 import json
-import re
 
 header = {
     'Host': 'api.webscan.cc',
