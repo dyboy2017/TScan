@@ -81,7 +81,6 @@
         $(function () {
             $(".btn-scan").click(function () {
                 $(this).attr('disabled', true);
-                $(this).html('请稍等 <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
                 var url = $('input[name=siteurl]').val();
                 if(url){
                     // 校验当前网址是否正确/符合规范
@@ -89,6 +88,7 @@
                     if($('.btn-scan').text() == '重新扫描') {
                         $("tbody tr:not(:first)").remove();
                     }
+                    $(this).html('请稍等 <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>');
                     $('.threatscan-result').show();
                     get_webside_info(url);
                 } else {

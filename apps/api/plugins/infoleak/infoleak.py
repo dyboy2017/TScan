@@ -5,7 +5,7 @@ import requests
 import threading
 from ..randheader.randheader import get_ua
 
-STATUS_CODES = [200, 401, 305, 407]           # HTTP响应状态码，判断认为存在风险链接的状态码
+STATUS_CODES = [200, 206, 401, 305, 407]           # HTTP响应状态码，判断认为存在风险链接的状态码
 RESULT = []
 
 
@@ -47,6 +47,8 @@ def get_infoleak(url=''):
     :param url:
     :return:
     """
+    global RESULT
+    RESULT = []         #清空
     file_path = os.path.dirname(__file__) + '/../../database/infoleak.json'     # 配置文件 database/infoleak.json
     fp = open(file_path, 'r', encoding='utf-8')
     json_data = json.load(fp)

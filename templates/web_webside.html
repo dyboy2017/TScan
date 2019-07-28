@@ -82,7 +82,6 @@
         $(function () {
             $(".btn-scan").click(function () {
                 $(this).attr('disabled', true);
-                $(this).text('请稍等');
                 var ip_addr = $('input[name=siteip]').val();
                 if(ip_addr){
                     // 校验当前网址是否正确/符合规范
@@ -90,6 +89,7 @@
                     if($('.btn-scan').text() == '重新扫描') {
                         $("tbody tr:not(:first)").remove();
                     }
+                    $(this).text('请稍等');
                     $('.threatscan-result').show();
                     get_webside_info(ip_addr);
                 } else {
