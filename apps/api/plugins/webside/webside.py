@@ -29,10 +29,9 @@ def get_side_info(ip):
         if text.startswith(u'\ufeff'):
             text = text.encode('utf8')[3:].decode('utf8')
         if text.find('null') > -1:
-            print('[LogError WebSide]: ', 'The webside info is null')
             return False
         else:
             return json.loads(text)
     except Exception as e:
-        print('[logError GetSideInfo]: ', e)
-        return False
+        pass
+    return False

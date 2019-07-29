@@ -17,7 +17,6 @@ def get_web_weight(domain):
         result_str = '百度({})，Google({})，搜狗({})  --数据来源于aizhan.com'.format(res_json['bdm'], res_json['google'], res_json['sogou'])
     except Exception as e:
         result_str = '获取数据失败，稍后再试'
-        print('[LogError WebWeight]: ', e)
     return result_str
 
 

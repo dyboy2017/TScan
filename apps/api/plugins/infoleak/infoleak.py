@@ -8,7 +8,7 @@ from ..randheader.randheader import get_ua
 STATUS_CODES = [200, 206, 401, 305, 407]           # HTTP响应状态码，判断认为存在风险链接的状态码
 RESULT = []
 
-THREADMAX = threading.BoundedSemaphore(30)    # 限制线程的最大数量为30个
+THREADMAX = threading.BoundedSemaphore(10)    # 限制线程的最大数量为10个
 
 
 def get_html(url=''):
@@ -23,7 +23,7 @@ def get_html(url=''):
             if response.status_code in STATUS_CODES:
                 return True
         except Exception as e:
-            print('[LogError infoleak]: ', e)
+            pass
     else:
         return False
 
@@ -40,7 +40,7 @@ def get_html2(url='', key=''):
             if response.status_code in STATUS_CODES:
                 RESULT.append([key, url])
         except Exception as e:
-            print('[LogError infoleak]: ', e)
+            pass
     THREADMAX.release()
 
 

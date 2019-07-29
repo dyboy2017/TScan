@@ -20,7 +20,6 @@ def get_ip_list(domain):
                 ip_str = item[4][0] + get_ip_addr(item[4][0])
                 ip_list.append(ip_str)
     except Exception as e:
-        print("[LogError GetIpList]: ", e)
         ip_list = ['server error']
     return ip_list
 
@@ -34,7 +33,6 @@ def get_ip_addr(ip):
             result_str = ' (物理地址: ' + addr_data['country'] + ',' + addr_data['regionName'] + ',' + addr_data['city'] \
                          + ',' + addr_data['as'] + ')  '
     except Exception as e:
-        print("[LogError GetIpAddr]: ", e)
         result_str = ' (Server Error)'
     return result_str
 
@@ -51,7 +49,6 @@ def getbaseinfo(url):
         try:
             res = requests.get(url, headers=get_ua(), timeout=8)
         except Exception as e:
-            print('[LogError GetDomain]: ', e)
             res = 0
         if res:
             info['domain'] = domain
@@ -60,7 +57,6 @@ def getbaseinfo(url):
             try:
                 info['ip'] = get_ip_list(domain)
             except Exception as e:
-                print("[LogError GetIP]: ", e)
                 info['ip'] = 'Not Found'
             if 'iis' in info['server'].lower():
                 info['os'] = "Windows Server"

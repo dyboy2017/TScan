@@ -158,7 +158,6 @@ def getwaf(url=''):
                 if res.status_code == 403 and result_str == '不存在WAF':
                     return "存在WAF"
             except Exception as e:
-                print('[LogError GetWaf]: ', e)
                 result_str = '目标站点不可访问'
     return result_str
 

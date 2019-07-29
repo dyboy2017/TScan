@@ -79,10 +79,8 @@ def iscdn(host):
             socket.setdefaulttimeout(1)                                 # 设置默认请求超时时间为1s
             try:
                 host = socket.gethostbyname(host)                           # 通过域名请求解析IP，这里调用此函数一般传递的是IP
-                print("[Log IsCdn]:", host)
             except Exception as e:
                 host = ''
-                print('[LogError IsCdn-GetHostName]: ', e)
     if not host:
         print("[LogError IsCdn]: Host not matched!")
         return '目标站点不可访问'
@@ -97,7 +95,7 @@ def iscdn(host):
             if str(response.autonomous_system_number) in ASNS:
                 result = True
     except Exception as e:
-        print('[Log ReadFile]: ', e)
+        pass
     return result
 
 

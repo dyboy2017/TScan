@@ -18,6 +18,7 @@
       <w>getdomainip</w>
       <w>gethtml</w>
       <w>getinfoleak</w>
+      <w>getuserip</w>
       <w>getwaf</w>
       <w>getwebside</w>
       <w>getwebsideinfo</w>
@@ -28,8 +29,10 @@
       <w>isexistcdn</w>
       <w>iswaf</w>
       <w>layui</w>
+      <w>mylogger</w>
       <w>oows</w>
       <w>portscan</w>
+      <w>rdata</w>
       <w>siteip</w>
       <w>siteurl</w>
       <w>sogou</w>
@@ -39,6 +42,9 @@
       <w>testurl</w>
       <w>threadmax</w>
       <w>threatscan</w>
+      <w>udata</w>
+      <w>uget</w>
+      <w>upost</w>
       <w>wappalyzer</w>
       <w>webinfo</w>
       <w>webscan</w>

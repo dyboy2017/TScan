@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
 from .plugins.common.common import success, error, addslashes, getdomain, getdomainip, check_ip, check_url
-import re
+import time
+from .plugins.common.common import getuserip
+from .plugins.loginfo.loginfo import LogHandler
+MYLOGGER = LogHandler(time.strftime("%Y-%m-%d", time.localtime()) + 'log')
 
 
 @csrf_exempt
@@ -11,6 +14,8 @@ def index(request):
     :param request:
     :return:
     """
+    MYLOGGER.error('M:' + request.method + ' P:' + request.path + ' UPOST:' + str(
+        request.POST) + ' SC:404 UIP:' + getuserip(request) + ' RDATA:' + '骚年，你想干嘛！')
     return error(404, '骚年，你想干嘛！', 'https://blog.dyboy.cn')
 
 
@@ -25,6 +30,8 @@ def baseinfo(request):
     url = check_url(request.POST.get('url'))
     if url:
         res = getbaseinfo(url)
+        MYLOGGER.info('M:' + request.method + ' P:' + request.path + ' UPOST:' + str(
+            request.POST) + ' SC:200 UIP:' + getuserip(request) + ' RDATA:' + str(res))
         return success(res['code'], res, res['msg'])
     return error(400, '请填写正确的URL地址', '请输入正确的网址， 例如：http://example.cn')
 
@@ -39,8 +46,10 @@ def webweight(request):
     from .plugins.webweight.webweight import get_web_weight
     url = check_url(request.POST.get('url'))
     if url:
-        print('[Log TargetWebsite]: ', url)
-        return success(200, get_web_weight(url), 'ok')
+        result = get_web_weight(url)
+        MYLOGGER.info('M:' + request.method + ' P:' + request.path + ' UPOST:' + str(
+            request.POST) + ' SC:200 UIP:' + getuserip(request) + ' RDATA:' + str(result))
+        return success(200, result, 'ok')
     return error(400, '请填写正确的URL地址', 'error')
 
 
@@ -89,7 +98,10 @@ def what_cms(request):
     from .plugins.whatcms.whatcms import getwhatcms
     url = check_url(request.POST.get('url'))
     if url:
-        return success(200, getwhatcms(url), 'ok')
+        result = getwhatcms(url)
+        MYLOGGER.info('M:' + request.method + ' P:' + request.path + ' UPOST:' + str(
+            request.POST) + ' SC:200 UIP:' + getuserip(request) + ' RDATA:' + str(result))
+        return success(200, result, 'ok')
     return error(400, '请填写正确的URL地址', 'error')
 
 
@@ -103,7 +115,10 @@ def port_scan(request):
     from .plugins.portscan.portscan import ScanPort
     ip = request.POST.get('ip')
     if check_ip(ip):
-        return success(200, ScanPort(ip).pool(), 'ok!')
+        result = ScanPort(ip).pool()
+        MYLOGGER.info('M:' + request.method + ' P:' + request.path + ' UPOST:' + str(
+            request.POST) + ' SC:200 UIP:' + getuserip(request) + ' RDATA:' + str(result))
+        return success(200, result, 'ok!')
     return error(400, '请填写正确的IP地址', 'error')
 
 
@@ -134,5 +149,8 @@ def getinfoleak(request):
     from .plugins.infoleak.infoleak import get_infoleak
     url = check_url(request.POST.get('url'))
     if url:
-        return success(200, get_infoleak(url), 'ok')
+        result = get_infoleak(url)
+        MYLOGGER.info('M:' + request.method + ' P:' + request.path + ' UPOST:' + str(
+            request.POST) + ' SC:200 UIP:' + getuserip(request) + ' RDATA:' + str(result))
+        return success(200, result, 'ok')
     return error(400, '请填写正确的URL地址', 'error')

@@ -283,9 +283,9 @@ def getwhatcms(url=''):
                     webinfo = WebPage(html.url, html.text, html.headers).info()
                     print('[LOG WhatCms]:', webinfo)
                 except Exception as e:
-                    print('ErrorLog WhatCms:', e)
+                    pass
         except Exception as e:
-            print('[LogError GetWhatCms]: ', e)
+            pass
         if webinfo:
             return_str = '，'.join(webinfo.get('apps')) + '，Server【{}】'.format(webinfo.get('server'))
     return return_str

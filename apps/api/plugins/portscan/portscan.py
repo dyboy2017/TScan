@@ -11,7 +11,7 @@ from urllib import parse
 
 sys.path.append(os.getcwd())
 
-THREADNUM = 100  # 线程数
+THREADNUM = 10  # 线程数
 
 SIGNS = (
     # 协议 | 版本 | 关键字
@@ -340,7 +340,6 @@ class ScanPort():
                 ipaddr = re.sub(':\d+', '', ipaddr)
             self.run(ipaddr)
         except Exception as e:
-            print('[LogError PortScan]: ', e)
             pass
         for i in self.out:
             _, port = i.split(':')

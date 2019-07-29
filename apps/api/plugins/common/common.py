@@ -17,6 +17,7 @@ FORBIDDEN_IP_RULE = '(^0\.0\.0\.0$)' \
                     '|(^172\.(1[6789]|2[0-9]|3[01])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)' \
                     '|(^192\.168\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)'
 
+
 """
 通用函数/公共函数
 """
@@ -52,6 +53,25 @@ def error(code=400, data=[], msg='error'):
         'msg': msg,
     }
     return HttpResponse(json.dumps(result), content_type='application/json')
+
+
+def getuserip(request):
+    """
+    获取用户IP
+    :param request:
+    :return:
+    """
+    try:
+        request_ip = request.META['REMOTE_ADDR']
+    except KeyError:
+        pass
+    try:
+        # 反向代理后存储的IP
+        user_ip = request.META['HTTP_X_FORWARDED_FOR']
+    except KeyError:
+        # 局域网请求
+        user_ip = None
+    return user_ip or request_ip
 
 
 def addslashes(sstr):
@@ -93,7 +113,7 @@ def getdomainip(host=''):
                 host = socket.gethostbyname(host)  # 通过域名请求解析IP，这里调用此函数一般传递的是IP
             except Exception as e:
                 host = ''
-                print('[LogError IsCdn-GetHostName]: ', e)
+                pass
     if re.search(FORBIDDEN_IP_RULE, host):
         return '目标站点不可访问'
     if not host:
