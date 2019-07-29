@@ -11,7 +11,7 @@ from urllib import parse
 
 sys.path.append(os.getcwd())
 
-THREADNUM = 10  # 线程数
+THREADNUM = 64  # 线程数
 
 SIGNS = (
     # 协议 | 版本 | 关键字

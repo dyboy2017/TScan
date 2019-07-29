@@ -6,3 +6,5 @@
 2019-07-30 00:12:11,434 views.py[line:154] INFO M:POST P:/api/infoleak UPOST:<QueryDict: {'url': ['http://study.cqu.edu.cn/']}> SC:200 UIP:127.0.0.1 RDATA:[]
 2019-07-30 00:13:17,944 views.py[line:154] INFO M:POST P:/api/infoleak UPOST:<QueryDict: {'url': ['http://ybjf.cqu.edu.cn/']}> SC:200 UIP:127.0.0.1 RDATA:[['Tomcat Manager', 'http://ybjf.cqu.edu.cn//examples/'], ['Tomcat Manager', 'http://ybjf.cqu.edu.cn//docs/setup.html']]
 2019-07-30 00:20:32,783 views.py[line:154] INFO M:POST P:/api/infoleak UPOST:<QueryDict: {'url': ['http://ybjf.cqu.edu.cn/']}> SC:200 UIP:127.0.0.1 RDATA:[['Tomcat Manager', 'http://ybjf.cqu.edu.cn//examples/'], ['Tomcat Manager', 'http://ybjf.cqu.edu.cn//docs/setup.html']]
+2019-07-30 00:33:53,923 views.py[line:120] INFO M:POST P:/api/portscan UPOST:<QueryDict: {'ip': ['222.198.139.10']}> SC:200 UIP:127.0.0.1 RDATA:['http:80']
+2019-07-30 00:34:28,244 views.py[line:154] INFO M:POST P:/api/infoleak UPOST:<QueryDict: {'url': ['http://ybjf.cqu.edu.cn/']}> SC:200 UIP:127.0.0.1 RDATA:[['Tomcat Manager', 'http://ybjf.cqu.edu.cn//examples/'], ['Tomcat Manager', 'http://ybjf.cqu.edu.cn//docs/setup.html']]

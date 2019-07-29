@@ -8,7 +8,7 @@ from ..randheader.randheader import get_ua
 STATUS_CODES = [200, 206, 401, 305, 407]           # HTTP响应状态码，判断认为存在风险链接的状态码
 RESULT = []
 
-THREADMAX = threading.BoundedSemaphore(10)    # 限制线程的最大数量为10个
+THREADMAX = threading.BoundedSemaphore(32)    # 限制线程的最大数量为32个
 
 
 def get_html(url=''):
