@@ -6,8 +6,16 @@ import re
 import socket
 
 # 禁止扫描的IP和域名
-FORBIDDEN_DOMAIN = '^127.*.*.*|^192.168.*.*|^local|gov.cn|top15.cn|dyboy'
-FORBIDDEN_IP = '^127.*.*.*|^192.168.*.*|^10.*.*.*|^172.(1[6-9]|2[0-9]|31).*.*|^120.55.58.175'
+FORBIDDEN_DOMAIN = '(127.0.*.*)' \
+                   '|(^192\.168\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)' \
+                   '|(local)|(gov.cn)|(top15.cn)|(dyboy)'
+
+FORBIDDEN_IP_RULE = '(^0\.0\.0\.0$)' \
+                    '|(120.55.58.175)' \
+                    '|(^10\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)' \
+                    '|(^127\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)' \
+                    '|(^172\.(1[6789]|2[0-9]|3[01])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)' \
+                    '|(^192\.168\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[0-9])$)'
 
 """
 通用函数/公共函数
@@ -86,7 +94,7 @@ def getdomainip(host=''):
             except Exception as e:
                 host = ''
                 print('[LogError IsCdn-GetHostName]: ', e)
-    if re.search(FORBIDDEN_IP, host):
+    if re.search(FORBIDDEN_IP_RULE, host):
         return '目标站点不可访问'
     if not host:
         print("[LogError IsCdn]: Host not matched!")
@@ -102,7 +110,7 @@ def check_ip(ipaddr=''):
     """
     ipaddr = (str(ipaddr)).strip()
     if (6 < len(ipaddr)) and (len(ipaddr) < 16):
-        if re.search(FORBIDDEN_IP, ipaddr):
+        if re.search(FORBIDDEN_IP_RULE, ipaddr):
             return False
         # IP地址的长度范围(6, 16)
         rule = r'^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'
