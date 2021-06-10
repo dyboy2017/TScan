@@ -2,6 +2,6 @@ requests==2.22.0
 geoip2==2.9.0
 fake_useragent==0.1.11
 chardet==3.0.4
-Django==2.2.4
+Django==2.2.24
 beautifulsoup4==4.6.0
 ipaddress==1.0.22
